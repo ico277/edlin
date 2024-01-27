@@ -6,12 +6,13 @@
 
 #define VERSION "1.0.0"
 
-//This function creates the input prompt and gets a string of commands from the user. 
-//Outputs: commandStorage {char*} the command received from the user
-char* promptForInput(char* commandStorage) {
+// This function creates the input prompt and gets a string of commands from the user. 
+// Outputs: a buffer containing the input from the user
+char* prompt_for_input() {
+    char[1024] buf;
     printf("*");
-    fgets(commandStorage, strlen(commandStorage), stdin);
-    return commandStorage;
+    fgets(buf, sizeof(commandStorage), stdin);
+    return buf;
 }
 
 int main(int argc, char** argv) {
