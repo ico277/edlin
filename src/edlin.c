@@ -6,6 +6,17 @@
 
 #define VERSION "1.0.0"
 
+//This function creates the input prompt and gets a string of commands from the user. 
+//Inputs: none
+//Outputs: {char*} the command received from the user
+char* promptForInput() {
+	char* command = (char*) malloc(10 * sizeof(char));	
+	printf("*");
+	scanf("%10s", command);
+	printf("%s", command);
+	return command;
+}
+
 int main(int argc, char** argv) {
 #ifdef DEBUG
     printf("argc: %d\n", argc);
