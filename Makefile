@@ -5,22 +5,21 @@ EXECUTABLE = edlin
 CFLAGS = -O2
 
 build:
-	$(CC) $(CFILES) -o $(EXECUTABLE) $(CFLAGS)
+	$(CC) $(CFILES) -o $(EXECUTABLE).out $(CFLAGS)
 
 install: ./$(EXECUTABLE)
-	cp ./$(EXECUTABLE) $(PREFIX)/bin/
+	cp ./$(EXECUTABLE).out $(PREFIX)/bin/$(EXECUTABLE)
 
 uninstall: $(PREFIX)/bin/$(EXECUTABLE)
 	rm $(PREFIX)/bin/$(EXECUTABLE)
 
 clean:
-	rm ./$(EXECUTABLE) 2> /dev/null || true
-	rm ./$(EXECUTABLE)_debug 2> /dev/null || true
+	rm ./*.out ./*.o 2> /dev/null || true
 	rm ./vgcore* 2> /dev/null || true
 
 run: build
-	./$(EXECUTABLE)
+	./$(EXECUTABLE).out
 
 debug: clean
-	$(CC) $(CFILES) -o $(EXECUTABLE)_debug $(LDFLAGS) $(CFLAGS)
-	gdb $(EXECUTABLE)_debug
+	$(CC) $(CFILES) -o $(EXECUTABLE)_debug.out $(CFLAGS)
+	gdb $(EXECUTABLE)_debug.out
