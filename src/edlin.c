@@ -23,11 +23,11 @@ int search_for_string_in_array(char** array, char* search_term, int high, int lo
     while (low <= high) {
         int mid = floor((high + low) / 2);
         //strcmp will return less than 0 is array[mid] comes first alphabetically
-        //than searchTerm
-        if (strcmp(array[mid], searchTerm) < 0) {
+        //than search_term
+        if (strcmp(array[mid], search_term) < 0) {
             low = mid + 1;
         }
-        else if (strcmp(array[mid], searchTerm) > 0) {
+        else if (strcmp(array[mid], search_term) > 0) {
             high = mid - 1;
         }
         else {
