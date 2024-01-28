@@ -16,7 +16,7 @@ char* prompt_for_input() {
 //This searches for a string in an array of strings and returns the index of it
 //The array has to be sorted
 //Outputs: the index of the string if found, -1 if not found
-int search_for_string_in_array(char* array[], char* searchTerm, int high, int low) {
+int search_for_string_in_array(char** array, char* searchTerm, int high, int low) {
     while (low <= high) {
         int mid = floor((high + low) / 2);
         //strcmp will return less than 0 is array[mid] comes first alphabetically
