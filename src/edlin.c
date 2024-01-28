@@ -1,9 +1,6 @@
-#include <ctype.h>
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <limits.h>
 
 #define VERSION "1.0.0"
 
