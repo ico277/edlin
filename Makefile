@@ -2,7 +2,7 @@ PREFIX = /usr/local
 CC = cc
 CFILES = $(wildcard src/*.c)
 EXECUTABLE = edlin
-CFLAGS = -O2
+CFLAGS = -Wall -Wextra -O2
 
 build:
 	$(CC) $(CFILES) -o $(EXECUTABLE).out $(CFLAGS)
@@ -21,5 +21,5 @@ run: build
 	./$(EXECUTABLE).out
 
 debug: clean
-	$(CC) $(CFILES) -o $(EXECUTABLE)_debug.out $(CFLAGS)
+	$(CC) $(CFILES) -g -o $(EXECUTABLE)_debug.out $(CFLAGS)
 	gdb $(EXECUTABLE)_debug.out

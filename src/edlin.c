@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -9,9 +10,9 @@
 // This function creates the input prompt and gets a string of commands from the user. 
 // Outputs: a buffer containing the input from the user
 char* prompt_for_input() {
-    char[1024] buf;
+    static char buf[1024];
     printf("*");
-    fgets(buf, sizeof(commandStorage), stdin);
+    fgets(buf, sizeof(buf), stdin);
     return buf;
 }
 
@@ -39,12 +40,24 @@ int main(int argc, char** argv) {
                 break;
         }
     }
-    // check if a file has been given
-    if (!(argc > optind)) {
-        fprintf(stderr, "Usage: edlin [FILE]\n");
-        return 1;
+
+    // TODO linked list
+    //char** textbuffer = NULL;
+    //size_t textbuffer_count = 0;
+    
+    // check if a file has been given and read it into the textbuffer
+    if (argc > optind) {
+        // TODO read file
+        char *file_path = argv[optind];
+        FILE *file_fp = fopen(file_path, "r");
+        
+        if (file_fp == NULL) {
+            perror("Error opening file");
+            return 1;
+        }
+        
+
     }
-    // TODO read file
-    char *file = argv[optind];
-    puts(file);
+
+    return 0;
 }
