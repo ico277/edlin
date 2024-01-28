@@ -17,21 +17,21 @@ char* prompt_for_input() {
 //The array has to be sorted
 //Outputs: the index of the string if found, -1 if not found
 int search_for_string_in_array(char* array[], char* searchTerm, int high, int low) {
-	while (low <= high) {
-		int mid = floor((high + low) / 2);
-		//strcmp will return less than 0 is array[mid] comes first alphabetically
-		//than searchTerm
-		if (strcmp(array[mid], searchTerm) < 0) {
-			low = mid + 1;
-		}
-		else if (strcmp(array[mid], searchTerm) > 0) {
-			high = mid - 1;
-		}
-		else {
-			return mid;
-		}
-	}
-	return -1;
+    while (low <= high) {
+        int mid = floor((high + low) / 2);
+        //strcmp will return less than 0 is array[mid] comes first alphabetically
+        //than searchTerm
+        if (strcmp(array[mid], searchTerm) < 0) {
+            low = mid + 1;
+        }
+        else if (strcmp(array[mid], searchTerm) > 0) {
+            high = mid - 1;
+        }
+        else {
+            return mid;
+        }
+    }
+    return -1;
 }
 
 int main(int argc, char** argv) {
