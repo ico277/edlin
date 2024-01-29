@@ -15,6 +15,23 @@ char* prompt_for_input() {
     return buf;
 }
 
+void print_a_file(FILE* filename) {
+    char character;
+    char previous_character;
+    int line_number = 1;
+    printf("%d: ", line_number);
+    character = fgetc(filename);
+    while (character != EOF) {
+        printf("%c", character);
+        previous_character = character;
+        character = fgetc(filename);
+        if (previous_character == '\n') {
+            line_number++;
+            printf("%d: ", line_number);
+        }
+    }  
+}
+
 //This searches for a string in an array of strings and returns the index of it
 //The array has to be sorted
 //Outputs: the index of the string if found, -1 if not found
@@ -78,7 +95,11 @@ int main(int argc, char** argv) {
             perror("Error opening file");
             return 1;
         }
-        
+        //implement L command to print file contents
+        char* command = prompt_for_input();
+        if (strcmp(command, "l") == 0 || strcmp(command, "L")) {
+            print_a_file(file_fp);
+        }
 
     }
 
