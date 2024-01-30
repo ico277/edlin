@@ -4,7 +4,6 @@
 #include "linkedlist.h"
 
 linkedlist_t* __linkedlist_init(linkedlist_t* list) {
-    list = malloc(sizeof(linkedlist_t));
     list->head = NULL;
     return list;
 }
@@ -12,32 +11,39 @@ linkedlist_t* __linkedlist_init(linkedlist_t* list) {
 size_t __linkedlist_size(linkedlist_t* list) {
     node_t* current = list->head;
     size_t i = 0;
-    while ((current = current->next) != NULL) {
+    while (current != NULL) {
         ++i;
+        current = current->next;
     }
     return i;
 }
 
 void __linkedlist_cleanup(linkedlist_t* list) {
     node_t* current = list->head;
-    if (list->head == NULL) return;
-    while ((current = current->next) != NULL) {
+    node_t* next;
+
+    while (current != NULL) {
+        next = current->next;
         free(current->value);
         free(current);
+        current = next;
     }
-    free(list);
 }
 
 node_t* __linkedlist_get_node_index(linkedlist_t* list, size_t index) {
     if (index == 0) return list->head;
+
     node_t* current = list->head;
     size_t i = 0;
-    while ((current = current->next) != NULL) {
-        // found
-        if (i == index)
+
+    while (current != NULL) {
+        if (i == index) {
             return current;
+        }
+        current = current->next;
         ++i;
     }
+
     // not found
     return NULL;
 }
@@ -123,31 +129,41 @@ linkedlist_t* __linkedlist_push_back_of_index(linkedlist_t* list, size_t index, 
 
 linkedlist_t* __linkedlist_pop(linkedlist_t* list) {
     if (list->head == NULL) return list;
+    
     node_t* head = list->head;
     free(head->value);
     list->head = head->next;
     free(head);
+    
     return list;
 }
 
 linkedlist_t* __linkedlist_remove(linkedlist_t* list, node_t* node) {
-    if (list->head == node) return __linkedlist_pop(list);
-    node_t* current;
-    while ((current = list->head) != NULL) {
-        if (current->next == node) {
-            free(node->value);
-            current->next = node->next;
-            free(node);
-            return list;
-        }
+    if (list->head == node) 
+        return __linkedlist_pop(list);
+
+    node_t* current = list->head;
+    node_t* prev = NULL;
+
+    while (current != node) {
+        prev = current;
+        current = current->next;
     }
-    // not found
-    return NULL;
+
+    prev->next = node->next;
+    free(node->value);
+    free(node);
+
+    return list;
 }
 
 linkedlist_t* __linkedlist_remove_index(linkedlist_t* list, size_t index) {
-    node_t* node = __linkedlist_get_node_index(list, index);
-    if (node == NULL) return NULL;
-    return __linkedlist_remove(list, node);
+    node_t* node_to_remove = __linkedlist_get_node_index(list, index);
+
+    // Node not found
+    if (node_to_remove == NULL) 
+        return NULL;
+
+    return __linkedlist_remove(list, node_to_remove);
 }
 
