@@ -15,21 +15,11 @@ char* prompt_for_input() {
     return buf;
 }
 
-void print_a_file(FILE* filename) {
-    char character;
-    char previous_character;
-    int line_number = 1;
-    printf("%d: ", line_number);
-    character = fgetc(filename);
-    while (character != EOF) {
-        printf("%c", character);
-        previous_character = character;
-        character = fgetc(filename);
-        if (previous_character == '\n') {
-            line_number++;
-            printf("%d: ", line_number);
-        }
-    }  
+void print_buffer(linkedlist_t* list) {
+    size_t len = __linkedlist_size(list);
+    for (size_t i = 0; i < len; i++) {
+        printf("%d: %s\n", i, __linkedlist_get_node_index(i)->value);
+    }
 }
 
 //This searches for a string in an array of strings and returns the index of it
