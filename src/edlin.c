@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
+#include <math.h>
 
 #define VERSION "1.0.0"
 
@@ -11,6 +13,13 @@ char* prompt_for_input() {
     printf("*");
     fgets(buf, sizeof(buf), stdin);
     return buf;
+}
+
+void print_buffer(linkedlist_t* list) {
+    size_t len = __linkedlist_size(list);
+    for (size_t i = 0; i < len; i++) {
+        printf("%d: %s\n", i, __linkedlist_get_node_index(i)->value);
+    }
 }
 
 //This searches for a string in an array of strings and returns the index of it
@@ -76,7 +85,11 @@ int main(int argc, char** argv) {
             perror("Error opening file");
             return 1;
         }
-        
+        //implement L command to print file contents
+        char* command = prompt_for_input();
+        if (strcmp(command, "l") == 0 || strcmp(command, "L")) {
+            print_a_file(file_fp);
+        }
 
     }
 
