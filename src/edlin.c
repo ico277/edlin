@@ -4,6 +4,8 @@
 #include <string.h>
 #include <math.h>
 
+#include "linkedlist.h"
+
 #define VERSION "1.0.0"
 
 // This function creates the input prompt and gets a string of commands from the user. 
@@ -18,12 +20,19 @@ char* prompt_for_input() {
 void print_buffer(linkedlist_t* list) {
     size_t len = __linkedlist_size(list);
     for (size_t i = 0; i < len; i++) {
-        printf("%d: %s\n", i, __linkedlist_get_node_index(i)->value);
+        printf("%d: %s\n", i, __linkedlist_get_node_index(&list, i)->value);
+    }
+}
+
+linkedlist_t* read_into_buffer(FILE* file, linkedlist_t* list) {
+    char* buf = malloc(BUFSIZ);
+    while(fgets(buf, BUFSIZ, file) != NULL) {
+        __linkedlist_push_back(list, buf);
     }
 }
 
 //This searches for a string in an array of strings and returns the index of it
-//The array has to be sorted
+//Th7e array has to be sorted
 //Outputs: the index of the string if found, -1 if not found
 int search_for_string_in_array(char** array, char* search_term, int high, int low) {
     if (sizeof(array) / sizeof(char*) <= 0) {
@@ -72,8 +81,8 @@ int main(int argc, char** argv) {
     }
 
     // TODO linked list
-    //char** textbuffer = NULL;
-    //size_t textbuffer_count = 0;
+    linkedlist_t textbuffer;
+    __linkedlist_init(&textbuffer);
     
     // check if a file has been given and read it into the textbuffer
     if (argc > optind) {
@@ -85,13 +94,10 @@ int main(int argc, char** argv) {
             perror("Error opening file");
             return 1;
         }
-        //implement L command to print file contents
-        char* command = prompt_for_input();
-        if (strcmp(command, "l") == 0 || strcmp(command, "L")) {
-            print_a_file(file_fp);
-        }
 
+	    read_into_buffer(file_fp, &textbuffer);
     }
 
+    __linkedlist_cleanup(&textbuffer);
     return 0;
 }
