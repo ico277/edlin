@@ -11,10 +11,10 @@
 // This function creates the input prompt and gets a string of commands from the user. 
 // Outputs: a buffer containing the input from the user
 char* prompt_for_input() {
-    static char buf[1024];
+    static char buf[BUFSIZ];
     printf("*");
-    fgets(buf, sizeof(buf), stdin);
-    return buf;
+    fflush(stdout);
+    return fgets(buf, BUFSIZ, stdin);
 }
 
 void print_buffer(linkedlist_t* list) {
@@ -97,7 +97,62 @@ int main(int argc, char** argv) {
 	    read_into_buffer(file_fp, &textbuffer);
     }
 
-    print_buffer(&textbuffer);
+    //print_buffer(&textbuffer);
+    int quit = 0;
+    while (!quit) {
+        char* prompt = prompt_for_input();
+        if (prompt == NULL)
+            return -1;
+        
+        switch (prompt[0]) {
+            case '?':
+                puts("help here");
+                break;
+            case 'c':
+            case 'C':
+                puts("put copy operation here");
+                break;
+            case 'd':
+            case 'D':
+                puts("put delete operation here");
+                break;
+            case 'e':
+            case 'E':
+                puts("put exit and save operation here");
+                break;
+            case 'i':
+            case 'I':
+                puts("put add line operation here");
+                break;
+            case 'l':
+            case 'L':
+                puts("put list operation here");
+                break;
+            case 'm':
+            case 'M':
+                puts("put move line operation here");
+                break;
+            case 'p':
+            case 'P':
+                puts("put list page per page operation here");
+                break;
+            case 'r':
+            case 'R':
+                puts("put replace operation here");
+                break;
+            case 's':
+            case 'S':
+                puts("put search operation here");
+                break;
+            case 't':
+            case 'T':
+                puts("put combine file(?) operation here");
+                break;
+            default:
+                puts("error");
+                break;
+        }
+    }
 
     __linkedlist_cleanup(&textbuffer);
     return 0;
