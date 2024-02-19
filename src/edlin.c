@@ -19,8 +19,16 @@ char* prompt_for_input() {
 
 void print_buffer(linkedlist_t* list) {
     size_t len = __linkedlist_size(list);
+    node_t* current = list->head;
     for (size_t i = 0; i < len; i++) {
-        printf("%d: %s\n", i, __linkedlist_get_node_index(&list, i)->value);
+        if (current == NULL)
+            break;
+        char* str = current->value;
+        printf("%ld: %s", i, str);
+        if (str[strlen(str) - 1] != '\n') {
+            printf("\n");
+        }
+        current = current->next;
     }
 }
 
@@ -28,13 +36,15 @@ linkedlist_t* read_into_buffer(FILE* file, linkedlist_t* list) {
     char* buf = malloc(BUFSIZ);
     while(fgets(buf, BUFSIZ, file) != NULL) {
         __linkedlist_push_back(list, buf);
+        buf = malloc(BUFSIZ);
     }
+    return list;
 }
 
 //This searches for a string in an array of strings and returns the index of it
 //Th7e array has to be sorted
 //Outputs: the index of the string if found, -1 if not found
-int search_for_string_in_array(char** array, char* search_term, int high, int low) {
+/*int search_for_string_in_array(char** array, char* search_term, int high, int low) {
     for (int i = 0; i < length; i++) {
         if (strcmp(array[i], search_term) == 0) {
             return i;
@@ -42,7 +52,7 @@ int search_for_string_in_array(char** array, char* search_term, int high, int lo
     }
 
     return -1;
-}
+}*/
 
 int main(int argc, char** argv) {
 #ifdef DEBUG
@@ -86,6 +96,8 @@ int main(int argc, char** argv) {
 
 	    read_into_buffer(file_fp, &textbuffer);
     }
+
+    print_buffer(&textbuffer);
 
     __linkedlist_cleanup(&textbuffer);
     return 0;
