@@ -35,23 +35,12 @@ linkedlist_t* read_into_buffer(FILE* file, linkedlist_t* list) {
 //Th7e array has to be sorted
 //Outputs: the index of the string if found, -1 if not found
 int search_for_string_in_array(char** array, char* search_term, int high, int low) {
-    if (sizeof(array) / sizeof(char*) <= 0) {
-        return -1;
-    }
-    while (low <= high) {
-        int mid = floor((high + low) / 2);
-        //strcmp will return less than 0 is array[mid] comes first alphabetically
-        //than search_term
-        if (strcmp(array[mid], search_term) < 0) {
-            low = mid + 1;
-        }
-        else if (strcmp(array[mid], search_term) > 0) {
-            high = mid - 1;
-        }
-        else {
-            return mid;
+    for (int i = 0; i < length; i++) {
+        if (strcmp(array[i], search_term) == 0) {
+            return i;
         }
     }
+
     return -1;
 }
 
