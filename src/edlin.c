@@ -148,6 +148,9 @@ int main(int argc, char** argv) {
             case 'T':
                 puts("put combine file(?) operation here");
                 break;
+	    case "q":
+	    case "Q":
+		quit = 1;
             default:
                 puts("error");
                 break;
