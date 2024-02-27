@@ -3,6 +3,32 @@
 
 #include "linkedlist.h"
 
+void __print_range_from_linked_list(linkedlist_t* list, size_t start_index, size_t end_index) { 
+  for (size_t i = start_index; i < end_index; i++) {
+      if (__linkedlist_get_node_index(list, i) == NULL)
+          break;
+      char* str = __linkedlist_get_node_index(list, i)->value;
+      printf("%ld: %s", i, str);
+      if (str[strlen(str) - 1] != '\n') {
+          printf("\n");
+      }
+  }
+}
+
+void __print_lines_from_linked_list(linkedlist_t* list, size_t number_of_lines) {
+    node_t* current = list->head;
+    for (size_t i = 0; i < number_of_lines; i++) {
+        if (current == NULL)
+            break;
+        char* str = current->value;
+        printf("%ld: %s", i, str);
+        if (str[strlen(str) - 1] != '\n') {
+            printf("\n");
+        }
+        current = current->next;
+    }
+}
+
 linkedlist_t* __linkedlist_init(linkedlist_t* list) {
     list->head = NULL;
     return list;
