@@ -9,6 +9,19 @@ typedef struct linkedlist {
     node_t* head;
 } linkedlist_t;
 
+//Prints lines from the linked list.
+//Inputs: list {linkedlist_t*} - pointer to the linked list to print.
+//        number_of_lines {int} - number of lines to print.
+//Return: nothing.
+void __print_lines_from_linked_list(linkedlist_t* list, size_t number_of_lines);
+
+//Print an inclusive range of lines from the linked list.
+//Inputs: list {linkedlist_t*} - pointer to the linked list to print.
+//        start_index {int} - start index to print from.
+//        end_index {int} - end index to print to.
+//Return: nothing.
+void __print_range_from_linked_list(linkedlist_t* list, size_t start_index, size_t end_index);
+
 // initialise a linkedlist, input may not be a null pointer
 linkedlist_t* __linkedlist_init(linkedlist_t* list);
 // iteratates through every node returning the amount of them
