@@ -4,6 +4,15 @@
 
 #include "linkedlist.h"
 
+size_t __linkedlist_search(linkedlist_t* list, char* search_term) {
+  for (size_t i = 0; i < __linkedlist_size(list); i++) {
+    if (strcmp(__linkedlist_get_node_index(list, i)->value, search_term) == 0 || strstr(__linkedlist_get_node_index(list, i)->value, search_term) != NULL) {
+      return i;
+    }
+  }
+  return -1;
+}
+
 void __print_range_from_linked_list(linkedlist_t* list, size_t start_index, size_t end_index) { 
   for (size_t i = start_index; i < end_index; i++) {
       if (__linkedlist_get_node_index(list, i) == NULL)
