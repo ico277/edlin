@@ -10,6 +10,7 @@
 
 // This function creates the input prompt and gets a string of commands from the user. 
 // Outputs: a buffer containing the input from the user
+// Returns the return value that fgets() returns
 char* prompt_for_input() {
     static char buf[BUFSIZ];
     printf("*");
@@ -17,21 +18,10 @@ char* prompt_for_input() {
     return fgets(buf, BUFSIZ, stdin);
 }
 
-void print_buffer(linkedlist_t* list) {
-    size_t len = __linkedlist_size(list);
-    node_t* current = list->head;
-    for (size_t i = 0; i < len; i++) {
-        if (current == NULL)
-            break;
-        char* str = current->value;
-        printf("%ld: %s", i, str);
-        if (str[strlen(str) - 1] != '\n') {
-            printf("\n");
-        }
-        current = current->next;
-    }
-}
-
+// Reads file into linked list
+// Inputs: file {FILE*} - a file to read
+//	   list {linkedlist_t*} - a list to read into
+// Return: list {linkedlist_t* - the list with the lines added
 linkedlist_t* read_into_buffer(FILE* file, linkedlist_t* list) {
     char* buf = malloc(BUFSIZ);
     while(fgets(buf, BUFSIZ, file) != NULL) {
@@ -40,19 +30,6 @@ linkedlist_t* read_into_buffer(FILE* file, linkedlist_t* list) {
     }
     return list;
 }
-
-//This searches for a string in an array of strings and returns the index of it
-//Th7e array has to be sorted
-//Outputs: the index of the string if found, -1 if not found
-/*int search_for_string_in_array(char** array, char* search_term, int high, int low) {
-    for (int i = 0; i < length; i++) {
-        if (strcmp(array[i], search_term) == 0) {
-            return i;
-        }
-    }
-
-    return -1;
-}*/
 
 int main(int argc, char** argv) {
 #ifdef DEBUG
