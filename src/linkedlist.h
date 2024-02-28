@@ -9,6 +9,12 @@ typedef struct linkedlist {
     node_t* head;
 } linkedlist_t;
 
+// Search for a string in the linked list. (Linear search)
+// Inputs: list {linkedlist_t*} - pointer to a list to search
+//         search_term {char*} - string to search for
+// Return: {size_t} - index of the node which contains the string in the list, -1 if not found
+size_t __linkedlist_search(linkedlist_t* list, char* search_term);
+
 //Prints lines from the linked list.
 //Inputs: list {linkedlist_t*} - pointer to the linked list to print.
 //        number_of_lines {int} - number of lines to print.
